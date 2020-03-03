@@ -3,6 +3,11 @@
 ## 安装
 `npm i cache-route`
 
+## 在线示例
+点击查看[在线示例](https://yuanzhizhu.github.io/react-cache-router/index.html#/a)
+
+在该示例中，PageA已经使用了CacheRoute；PageB使用的是默认的React-Router。
+
 ## 场景
 
 当路由`/a`变为`/b`后，将由页面 A 跳转至页面 B。
