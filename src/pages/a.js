@@ -17,7 +17,6 @@ class A extends React.Component {
   componentWillUnmount = () => {
     // componentWillUnmount将失效
     // 业务逻辑需要移动到componentWillHide
-    console.log("component will hide");
   };
 
   render = () => {

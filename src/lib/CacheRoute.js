@@ -16,7 +16,7 @@ class CacheRoute extends Component {
   matchCount = 0; // 每一次match到路由，都会自加1
   scrollTop = 0; // 用于保存滚动高度信息
   $pageElement = null; // 页面元素实例
-  componentRef = React.createRef();
+  pageRef = React.createRef();
 
   lastProps = {};
   lastState = {};
@@ -30,7 +30,7 @@ class CacheRoute extends Component {
     return this.visible;
   };
 
-  cacheRouteGetPageElement = $instance => {
+  $CacheRouteInjectPageElement = $instance => {
     this.$pageElement = $instance;
   };
 
@@ -45,7 +45,7 @@ class CacheRoute extends Component {
         const el = document.scrollingElement || document.documentElement;
         el.scrollTo(0, this.scrollTop);
 
-        const $pageElement = this.$pageElement || this.componentRef.current;
+        const $pageElement = this.$pageElement || this.pageRef.current;
 
         /**
          * componentDidShow在componentDidUpdate后触发
@@ -66,7 +66,7 @@ class CacheRoute extends Component {
   storeScrollInfoIfLeavePage = lastVisible => {
     if (!this.visible && lastVisible) {
       this.scrollTop = this.getBodyScrollTop();
-      const $pageElement = this.$pageElement || this.componentRef.current;
+      const $pageElement = this.$pageElement || this.pageRef.current;
 
       if ($pageElement && $pageElement.componentWillHide) {
         this.lastProps = deepCopy($pageElement.props);
@@ -99,8 +99,8 @@ class CacheRoute extends Component {
               <Component
                 {...restProps}
                 getPageVisible={this.getPageVisible}
-                cacheRouteGetPageElement={this.cacheRouteGetPageElement}
-                ref={this.componentRef}
+                $CacheRouteInjectPageElement={this.$CacheRouteInjectPageElement}
+                ref={this.pageRef}
               />
             </div>
           ) : null;

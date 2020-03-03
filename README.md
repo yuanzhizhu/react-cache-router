@@ -1,68 +1,126 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React-Cache-Router 文档
 
-## Available Scripts
+## 场景
 
-In the project directory, you can run:
+当路由`/a`变为`/b`后，将由页面 A 跳转至页面 B。
 
-### `yarn start`
+假设，此时页面 A 已经有了填写一半的 Form 表单，并且我希望再次从路由`/b`切回`/a`的时候，表单数据依然存在。一个常见的方法是，将页面 A 的数据临时存放到状态管理工具里面，比如 redux。
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+但是，对于大多数，那些状态并不复杂的项目而言，多引入一个 redux 来单纯做这个事情，又有点大材小用，且增加代码复杂度。
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+所以需要一个 React-Cache-Router，用最低的成本，一样实现这个事儿。
 
-### `yarn test`
+## 原理
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`<CacheRoute />` 的基本原理：因 `<Route />` 组件的[children](https://reacttraining.com/react-router/web/api/Route/children-func) 函数，具备忽视路由变化的特性，可以用来实现页面缓存。 `<CacheRoute />` 所做的主要工作，是进一步封装了 `<Route children={...} />` ，并为常见的开发场景，提供了一系列 API。
 
-### `yarn build`
+## 基本用法
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```jsx
+import React from "react";
+import { HashRouter, Route } from "react-router-dom";
+import CacheRoute from "./lib/CacheRoute";
+import PageA from "./pages/a";
+import PageB from "./pages/b";
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+function App() {
+  return (
+    <HashRouter>
+      <CacheRoute path="/a" component={PageA} />
+      <Route path="/b" component={PageB} />
+    </HashRouter>
+  );
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default App;
+```
 
-### `yarn eject`
+用 `<CacheRoute />` 代替 `<Route />` ，其 `component` 将会被缓存。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+故以上例子中，PageA 组件将被缓存。
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 生命周期
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+使用 CacheRoute 后，将会为组件自动注入两个生命周期。如下：
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### 1、componentWillHide()
 
-## Learn More
+因页面被缓存，将不再被卸载。故 `componentWillUnmount` 生命周期将失效。每次离开页面，将触发 `componentWillHide` ，可代替 `componentWillUnmount`。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### 2、componentDidShow(lastProps, lastState)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+因页面被缓存，将不再被卸载。故`componentDidMount`生命周期只会触发一次。第二次、第三次……进入页面，将触发 `componentDidShow` 生命周期。
 
-### Code Splitting
+Demo 如下：
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```jsx
+import React from "react";
 
-### Analyzing the Bundle Size
+class PageA extends React.Component {
+  componentDidShow = (lastProps, lastState) => {
+    // 每次进入页面都会触发
+    console.log("component did show");
+    console.log("lastProps:", lastProps, "lastState:", lastState);
+  };
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+  componentDidMount = () => {
+    // 只会触发一次
+    console.log("component did mount");
+  };
 
-### Making a Progressive Web App
+  componentWillHide = () => {
+    // 每次离开页面都会触发
+    console.log("component will hide");
+  };
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+  componentWillUnmount = () => {
+    // componentWillUnmount将失效
+    // 这个生命周期中的业务逻辑，需移至componentWillHide
+  };
 
-### Advanced Configuration
+  render = () => {
+    return (
+      <div>
+        <h1>Page A</h1>
+        <div>
+          <input />
+        </div>
+        <button onClick={() => this.props.history.push("/b")}>go page b</button>
+      </div>
+    );
+  };
+}
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+export default PageA;
+```
 
-### Deployment
+## API
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+目前只提供了两个 API，分别如下：
 
-### `yarn build` fails to minify
+#### 1、getPageVisible()
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+得到当前页面是否显示。返回：true 或 false。
+
+#### 2、\$CacheRouteInjectPageElement()
+
+在 CacheRoute 中注入当前的 page 的实例；当 PageA 被高阶函数包裹时使用。
+
+Demo 如下：
+
+```jsx
+class PageA extends React.Component {
+  constructor(props) {
+    this.props.$CacheRouteInjectPageElement(this);
+    super(props);
+  }
+
+  render = () => {
+    const visible = this.props.getPageVisible();
+    return visible ? "pageA可见" : "pageA隐藏";
+  };
+}
+
+export default SomeHoc(PageA);
+```
+
