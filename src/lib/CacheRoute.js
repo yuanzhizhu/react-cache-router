@@ -9,22 +9,17 @@ if (
   window.history.scrollRestoration = "manual";
 }
 
-const copy = (obj) => JSON.parse(JSON.stringify(obj));
+const deepCopy = obj => JSON.parse(JSON.stringify(obj));
 
 class CacheRoute extends Component {
-  display = false; // 默认不展示组件
+  visible = false; // 默认不展示组件
   matchCount = 0; // 每一次match到路由，都会自加1
   scrollTop = 0; // 用于保存滚动高度信息
-
-  $component = null;
+  $pageElement = null; // 页面元素实例
+  componentRef = React.createRef();
 
   lastProps = {};
   lastState = {};
-
-  constructor(props) {
-    super(props);
-    this.componentRef = React.createRef();
-  }
 
   // 防止因父层render对本层造成影响
   shouldComponentUpdate = () => {
@@ -32,11 +27,11 @@ class CacheRoute extends Component {
   };
 
   getPageVisible = () => {
-    return this.display;
+    return this.visible;
   };
 
-  getMatchCount = () => {
-    return this.matchCount;
+  cacheRouteGetPageElement = $instance => {
+    this.$pageElement = $instance;
   };
 
   getBodyScrollTop = () => {
@@ -44,39 +39,41 @@ class CacheRoute extends Component {
     return el.scrollTop;
   };
 
-  restoreScrollInfoIfShowPage = lastDisplay => {
-    if (this.display && !lastDisplay) {
+  restoreScrollInfoIfShowPage = lastVisible => {
+    if (this.visible && !lastVisible) {
       setTimeout(() => {
         const el = document.scrollingElement || document.documentElement;
         el.scrollTo(0, this.scrollTop);
 
-        const $component = this.$component || this.componentRef.current;
+        const $pageElement = this.$pageElement || this.componentRef.current;
 
-        if (this.matchCount > 1 && $component && $component.componentDidShow) {
-          // componentDidShow在componentDidUpdate后触发
-          // 当触发componentDidShow的时候，滚动条位置已经恢复
-          // 第一次进入页面，不会执行componentDidShould
-          $component.componentDidShow(this.lastProps, this.lastState);
+        /**
+         * componentDidShow在componentDidUpdate后触发
+         * 当触发componentDidShow的时候，滚动条位置已经恢复
+         * 第一次进入页面，不会执行componentDidShould
+         */
+        if (
+          this.matchCount > 1 &&
+          $pageElement &&
+          $pageElement.componentDidShow
+        ) {
+          $pageElement.componentDidShow(this.lastProps, this.lastState);
         }
       }, 0);
     }
   };
 
-  storeScrollInfoIfLeavePage = lastDisplay => {
-    if (!this.display && lastDisplay) {
+  storeScrollInfoIfLeavePage = lastVisible => {
+    if (!this.visible && lastVisible) {
       this.scrollTop = this.getBodyScrollTop();
+      const $pageElement = this.$pageElement || this.componentRef.current;
 
-      const $component = this.$component || this.componentRef.current;
-      if ($component && $component.componentWillHide) {
-        this.lastProps = copy($component.props);
-        this.lastState = copy($component.state);
-        $component.componentWillHide();
+      if ($pageElement && $pageElement.componentWillHide) {
+        this.lastProps = deepCopy($pageElement.props);
+        this.lastState = deepCopy($pageElement.state);
+        $pageElement.componentWillHide();
       }
     }
-  };
-
-  getInstance = ($instance) => {
-    this.$component = $instance;
   };
 
   render = () => {
@@ -85,26 +82,25 @@ class CacheRoute extends Component {
       <Route
         {...restProps}
         children={({ match, ...restProps }) => {
-          const lastDisplay = this.display;
+          const lastVisible = this.visible;
 
           if (match) {
-            this.display = true;
+            this.visible = true;
             this.matchCount++;
           } else {
-            this.display = false;
+            this.visible = false;
           }
 
-          this.storeScrollInfoIfLeavePage(lastDisplay);
-          this.restoreScrollInfoIfShowPage(lastDisplay);
+          this.storeScrollInfoIfLeavePage(lastVisible);
+          this.restoreScrollInfoIfShowPage(lastVisible);
 
           return this.matchCount > 0 ? (
-            <div style={{ display: this.display ? "block" : "none" }}>
+            <div style={{ display: this.visible ? "block" : "none" }}>
               <Component
                 {...restProps}
                 getPageVisible={this.getPageVisible}
-                getMatchCount={this.getMatchCount}
+                cacheRouteGetPageElement={this.cacheRouteGetPageElement}
                 ref={this.componentRef}
-                getInstance={this.getInstance}
               />
             </div>
           ) : null;
