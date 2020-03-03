@@ -4,15 +4,15 @@
 
 当路由`/a`变为`/b`后，将由页面 A 跳转至页面 B。
 
-假设，此时页面 A 已经有了填写一半的 Form 表单，并且我希望再次从路由`/b`切回`/a`的时候，表单数据依然存在。一个常见的方法是，将页面 A 的数据临时存放到状态管理工具里面，比如 redux。
+假设，此时页面 A 已经有了填写一半的 Form 表单数据，并且我希望再次从路由`/b`切回`/a`的时候，表单数据依然存在。一个常见的方法是，将页面 A 的数据临时存放在状态管理工具里面，比如 redux。
 
-但是，对于大多数，那些状态并不复杂的项目而言，多引入一个 redux 来单纯做这个事情，又有点大材小用，且增加代码复杂度。
+但是在大多数时候，项目的状态并不复杂，多引入一个 redux 来单纯做这个事情，又有点大材小用，且增加代码复杂度。
 
-所以需要一个 React-Cache-Router，用最低的成本，一样实现这个事儿。
+所以需要一个 React-Cache-Router，用最低的成本，一样来实现这个事儿。
 
 ## 原理
 
-`<CacheRoute />` 的基本原理：因 `<Route />` 组件的[children](https://reacttraining.com/react-router/web/api/Route/children-func) 函数，具备忽视路由变化的特性，可以用来实现页面缓存。 `<CacheRoute />` 所做的主要工作，是进一步封装了 `<Route children={...} />` ，并为常见的开发场景，提供了一系列 API。
+`<CacheRoute />` 的基本原理：因 `<Route />` 组件的[children](https://reacttraining.com/react-router/web/api/Route/children-func) 函数，具备忽视路由变化的特性，可以用来做页面缓存。 `<CacheRoute />` 所做的主要工作是：进一步封装了 `<Route children={...} />` ，并为常见的开发场景，提供了一系列 API。
 
 ## 基本用法
 
@@ -35,13 +35,13 @@ function App() {
 export default App;
 ```
 
-用 `<CacheRoute />` 代替 `<Route />` ，其 `component` 将会被缓存。
+用 `<CacheRoute />` 代替 `<Route />`后 ，其 `component` 将会被缓存。
 
-故以上例子中，PageA 组件将被缓存。
+故在上述例子中，PageA 组件将被缓存。
 
 ## 生命周期
 
-使用 CacheRoute 后，将会为组件自动注入两个生命周期。如下：
+在使用 `<CacheRoute />` 后，将会为被包裹的组件，自动注入两个生命周期。分别是：
 
 #### 1、componentWillHide()
 
@@ -49,7 +49,7 @@ export default App;
 
 #### 2、componentDidShow(lastProps, lastState)
 
-因页面被缓存，将不再被卸载。故`componentDidMount`生命周期只会触发一次。第二次、第三次……进入页面，将触发 `componentDidShow` 生命周期。
+因页面被缓存，将不再被卸载。故`componentDidMount`生命周期只会触发一次。第二次、第三次……进入页面，将触发 `componentDidShow` 。因可能存在特殊场景，`componentDidShow` 支持获取到跳出页面前的 `props` 和 `state`（很少会用到）。
 
 Demo 如下：
 
@@ -96,15 +96,15 @@ export default PageA;
 
 ## API
 
-目前只提供了两个 API，分别如下：
+目前 CacheRoute 提供了两个 API，分别是：
 
 #### 1、getPageVisible()
 
-得到当前页面是否显示。返回：true 或 false。
+获取当前页面显隐状态。返回：true 或 false。
 
 #### 2、\$CacheRouteInjectPageElement()
 
-在 CacheRoute 中注入当前的 page 的实例；当 PageA 被高阶函数包裹时使用。
+当 页面 被高阶函数包裹时使用，务必请调用\$CacheRouteInjectPageElement()，把页面实例抛给CacheRoute
 
 Demo 如下：
 
