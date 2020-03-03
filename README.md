@@ -1,5 +1,8 @@
 # React-Cache-Router 文档
 
+## 安装
+`npm i cache-route`
+
 ## 场景
 
 当路由`/a`变为`/b`后，将由页面 A 跳转至页面 B。
@@ -104,7 +107,7 @@ export default PageA;
 
 #### 2、\$CacheRouteInjectPageElement()
 
-当 页面 被高阶函数包裹时使用，务必请调用\$CacheRouteInjectPageElement()，把页面实例抛给CacheRoute
+当页面被高阶函数包裹时使用，请务必调用\$CacheRouteInjectPageElement()方法，把页面实例抛给CacheRoute
 
 Demo 如下：
 
@@ -123,4 +126,3 @@ class PageA extends React.Component {
 
 export default SomeHoc(PageA);
 ```
-
