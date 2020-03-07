@@ -1,6 +1,6 @@
 import React from "react";
 import { HashRouter, Route, Redirect } from "react-router-dom";
-import CacheRoute from "./lib/cache-route/src/index";
+import CacheRoute from "./lib/cache-route";
 import PageA from "./pages/a";
 import PageB from "./pages/b";
 
