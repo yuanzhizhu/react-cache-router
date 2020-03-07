@@ -4,7 +4,7 @@
 `npm i cache-route`
 
 ## 在线示例
-点击查看[在线示例](https://yuanzhizhu.github.io/react-cache-router/index.html#/a)
+点击查看[在线示例](https://yuanzhizhu.github.io/react-cache-router/index.html)
 
 在该示例中，PageA已经使用了CacheRoute；PageB使用的是默认的React-Router。
 

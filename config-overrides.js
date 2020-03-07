@@ -2,7 +2,7 @@
 
 module.exports = function override(config, env) {
   if (env === 'production') {
-    config.output.publicPath = '/build';
+    config.output.publicPath = '/react-cache-router/build';
   }
   return config;
 };
