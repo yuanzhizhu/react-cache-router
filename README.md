@@ -18,6 +18,8 @@
 
 所以需要一个 React-Cache-Router，用最低的成本，一样来实现这个事儿。
 
+同时，在某些业务场景下，比如很长的列表页，有保存滚动条位置的需求。当然，这个也已经在 CacheRoute 里面自动帮忙实现了。
+
 ## 原理
 
 `<CacheRoute />` 的基本原理：因 `<Route />` 组件的[children](https://reacttraining.com/react-router/web/api/Route/children-func) 函数，具备忽视路由变化的特性，可以用来做页面缓存。 `<CacheRoute />` 所做的主要工作是：进一步封装了 `<Route children={...} />` ，并为常见的开发场景，提供了一系列 API。
@@ -112,7 +114,7 @@ export default PageA;
 
 #### 2、\$CacheRouteInjectPageElement()
 
-当页面被高阶函数包裹时使用，请务必调用\$CacheRouteInjectPageElement()方法，把页面实例抛给CacheRoute
+当页面组件被高阶函数包裹时，请务必在页面组件的 `constructor` 中调用\$CacheRouteInjectPageElement()方法，把页面实例抛给CacheRoute
 
 Demo 如下：
 
