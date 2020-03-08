@@ -122,7 +122,7 @@ Demo 如下：
 class PageA extends React.Component {
   constructor(props) {
     super(props);
-    this.props.$CacheRouteInjectPageElement(this);
+    props.$CacheRouteInjectPageElement(this);
   }
 
   render = () => {
