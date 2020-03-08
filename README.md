@@ -121,8 +121,8 @@ Demo 如下：
 ```jsx
 class PageA extends React.Component {
   constructor(props) {
-    this.props.$CacheRouteInjectPageElement(this);
     super(props);
+    this.props.$CacheRouteInjectPageElement(this);
   }
 
   render = () => {
