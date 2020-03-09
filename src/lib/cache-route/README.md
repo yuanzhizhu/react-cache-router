@@ -27,7 +27,7 @@
 ```jsx
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
-import CacheRoute from "./lib/CacheRoute";
+import CacheRoute from "CacheRoute";
 import PageA from "./pages/a";
 import PageB from "./pages/b";
 
