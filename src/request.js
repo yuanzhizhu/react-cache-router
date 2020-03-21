@@ -7,7 +7,7 @@ const prefix = /github/.test(window.location.host)
 const request = url =>
   new Promise(resolve => {
     axios
-      .get(url)
+      .get(`${prefix}${url}`)
       .then(res => {
         return res.data;
       })

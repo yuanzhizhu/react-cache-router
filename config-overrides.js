@@ -10,7 +10,7 @@ const modifyBabelFn = override(
 
 module.exports = function override(config, env) {
   if (env === "production") {
-    config.output.publicPath = "/react-cache-router/build";
+    config.output.publicPath = "/react-cache-router/build/";
   }
   return modifyBabelFn(config, env);
 };
