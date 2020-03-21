@@ -38,7 +38,7 @@ class AppList extends React.Component {
   };
 
   goAppDetail = item => {
-    this.props.history.push(`/app-detail?app=${item.title}`);
+    this.props.history.push(`/app-detail?title=${item.title}&icon=${item.icon}`);
   };
 
   render = () => {
