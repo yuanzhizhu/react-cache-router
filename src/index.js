@@ -1,20 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { HashRouter, Route, Redirect } from "react-router-dom";
-import CacheRoute from "./lib/cache-route";
+import { HashRouter, Route } from "react-router-dom";
+import CacheRoute from "cache-route";
+import Overview from "./pages/Overview";
 import AppList from "./pages/AppList";
 import AppDetail from "./pages/AppDetail";
 import "./style.css";
 
 function App() {
   return (
-    <div id="app">
-      <HashRouter>
-        <Route path="/" exact render={() => <Redirect to="/app-list" />} />
-        <CacheRoute path="/app-list" component={AppList} />
-        <Route path="/app-detail" component={AppDetail} />
-      </HashRouter>
-    </div>
+    <HashRouter>
+      <Route path="/" exact component={Overview} />
+      <CacheRoute path="/app-list" component={AppList} />
+      <Route path="/app-detail" component={AppDetail} />
+    </HashRouter>
   );
 }
 

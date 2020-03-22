@@ -2663,6 +2663,11 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
+cache-route@^1.0.7:
+  version "1.0.7"
+  resolved "http://r.cnpmjs.org/cache-route/download/cache-route-1.0.7.tgz#9e1b6ab74b9a09eaa42b6246c4d53c5ff06ca1e7"
+  integrity sha1-nhtqt0uaCeqkK2JGxNU8X/Bsoec=
+
 call-me-maybe@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/call-me-maybe/download/call-me-maybe-1.0.1.tgz#26d208ea89e37b5cbde60250a15f031c16a4d66b"
