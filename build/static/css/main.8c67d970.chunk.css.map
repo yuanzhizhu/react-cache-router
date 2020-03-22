@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,KACE,eAAgB,CAChB,WACF","file":"main.8c67d970.chunk.css","sourcesContent":["#app {\n  max-width: 750px;\n  margin: auto;\n}\n"]}

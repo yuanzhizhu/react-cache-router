@@ -1,7 +1,7 @@
 import React from "react";
-import { List, Avatar, Button, message } from "antd";
+import { List, Avatar, Button, message, Icon } from "antd";
 import CodeView from "../CodeView";
-import request from "../request";
+import { getAppList } from "../api";
 
 class AppList extends React.Component {
   state = {
@@ -21,7 +21,7 @@ class AppList extends React.Component {
 
   componentDidMount = () => {
     this.setState({ loading: true });
-    request("/app-list.json")
+    getAppList()
       .then(apps => this.setState({ apps }))
       .finally(() => {
         this.setState({ loading: false });
@@ -38,7 +38,7 @@ class AppList extends React.Component {
   };
 
   goAppDetail = item => {
-    this.props.history.push(`/app-detail?title=${item.title}&icon=${item.icon}`);
+    this.props.history.push(`/app-detail?title=${item.title}`);
   };
 
   render = () => {
@@ -47,16 +47,17 @@ class AppList extends React.Component {
     return (
       <>
         <Button
+          shape="circle"
           type="primary"
           style={{ margin: 8 }}
           onClick={() => this.setState({ showCode: !showCode })}
         >
-          {showCode ? "隐藏代码" : "显示代码"}
+          <Icon type="right-square" />
         </Button>
         {showCode && <CodeView src={() => import("!!raw-loader!./AppList")} />}
         <List
-          loading={loading}
           itemLayout="horizontal"
+          loading={loading}
           dataSource={apps}
           renderItem={item => (
             <List.Item onClick={() => this.goAppDetail(item)}>
