@@ -2167,7 +2167,7 @@ aws4@^1.8.0:
 
 axios@^0.19.2:
   version "0.19.2"
-  resolved "http://r.cnpmjs.org/axios/download/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+  resolved "https://r.cnpmjs.org/axios/download/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha1-PqNsXYgY0NX4qKl6bTa4bNwAyyc=
   dependencies:
     follow-redirects "1.5.10"
@@ -2665,7 +2665,7 @@ cache-base@^1.0.1:
 
 cache-route@^1.0.7:
   version "1.0.7"
-  resolved "http://r.cnpmjs.org/cache-route/download/cache-route-1.0.7.tgz#9e1b6ab74b9a09eaa42b6246c4d53c5ff06ca1e7"
+  resolved "https://r.cnpmjs.org/cache-route/download/cache-route-1.0.7.tgz#9e1b6ab74b9a09eaa42b6246c4d53c5ff06ca1e7"
   integrity sha1-nhtqt0uaCeqkK2JGxNU8X/Bsoec=
 
 call-me-maybe@^1.0.1:
@@ -3554,7 +3554,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
 
 debug@=3.1.0:
   version "3.1.0"
-  resolved "http://r.cnpmjs.org/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  resolved "https://r.cnpmjs.org/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
   dependencies:
     ms "2.0.0"
@@ -4517,9 +4517,9 @@ fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.9:
     ua-parser-js "^0.7.18"
 
 figgy-pudding@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.npm.taobao.org/figgy-pudding/download/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
-  integrity sha1-hiRwESkBxyeg5JWoB0S9W6odZ5A=
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.2.tgz#b4eee8148abb01dcf1d1ac34367d59e12fa61d6e"
+  integrity sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==
 
 figures@^3.0.0:
   version "3.2.0"
@@ -4669,7 +4669,7 @@ flush-write-stream@^1.0.0:
 
 follow-redirects@1.5.10:
   version "1.5.10"
-  resolved "http://r.cnpmjs.org/follow-redirects/download/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  resolved "https://r.cnpmjs.org/follow-redirects/download/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
   integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
   dependencies:
     debug "=3.1.0"
@@ -5085,7 +5085,7 @@ hex-color-regex@^1.1.0:
 
 highlight.js@^9.18.1:
   version "9.18.1"
-  resolved "http://r.cnpmjs.org/highlight.js/download/highlight.js-9.18.1.tgz#ed21aa001fe6252bb10a3d76d47573c6539fe13c"
+  resolved "https://r.cnpmjs.org/highlight.js/download/highlight.js-9.18.1.tgz#ed21aa001fe6252bb10a3d76d47573c6539fe13c"
   integrity sha1-7SGqAB/mJSuxCj121HVzxlOf4Tw=
 
 history@^4.9.0:
@@ -8757,7 +8757,7 @@ raw-body@2.4.0:
 
 raw-loader@^4.0.0:
   version "4.0.0"
-  resolved "http://r.cnpmjs.org/raw-loader/download/raw-loader-4.0.0.tgz#d639c40fb9d72b5c7f8abc1fb2ddb25b29d3d540"
+  resolved "https://r.cnpmjs.org/raw-loader/download/raw-loader-4.0.0.tgz#d639c40fb9d72b5c7f8abc1fb2ddb25b29d3d540"
   integrity sha1-1jnED7nXK1x/irwfst2yWynT1UA=
   dependencies:
     loader-utils "^1.2.3"
@@ -10300,9 +10300,9 @@ sshpk@^1.7.0:
     tweetnacl "~0.14.0"
 
 ssri@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.npm.taobao.org/ssri/download/ssri-6.0.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fssri%2Fdownload%2Fssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
-  integrity sha1-KjxBso3UW2K2Nnbst0ABJlrp7dg=
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
+  integrity sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   dependencies:
     figgy-pudding "^3.5.1"
 
